@@ -9,7 +9,6 @@ app.get('/articles', (req,res) => {
     if(req.query.sourceName){
         sourceName = req.query.sourceName;
         News.find({'source.name': sourceName}, (err,articles) => {
-            console.log('bla',articles);
             res.send({ articles });
         });
     }else if(req.query.date){
