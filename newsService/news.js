@@ -8,15 +8,20 @@ app.use(bodyParser.json());
 app.get('/articles', (req,res) => {
     if(req.query.sourceName){
         sourceName = req.query.sourceName;
-        News.find({'source.name': sourceName}, (err,articles) => {
+        News.find( { "source.name": sourceName }, (err,articles) => {
+            if(err)console.log(err);
             res.send({ articles });
         });
     }else if(req.query.date){
         date = req.query.date;
-        //News.find(publishedAt: /date/)
+        News.find( { publishedAt: date }, (err,articles) => {
+            if(err)console.log(err);
+            res.send({ articles });
+        });
     }else if(req.query.authorName){
         authorName = req.query.authorName;
-        News.find({'author': authorName}, (err,articles) => {
+        console.log(authorName);
+        News.find({author: authorName}, (err,articles) => {
             res.send({ articles });
         });
     } else {
