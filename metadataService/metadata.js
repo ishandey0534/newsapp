@@ -9,39 +9,27 @@ app.use(bodyParser.json());
 app.get('/count', async (req,res) => {
     if(req.query.sourceName){
         const sourceName=req.query.sourceName;
-        News.countDocuments({"source.name" : "The Hindu"}, (err,count) => {
+        return News.countDocuments({"source.name" : "The Hindu"}, (err,count) => {
             return res.send({ count });
-        })
-    }
-    try {
-        News.countDocuments({}, (err,count) => {
-            res.send({ count });
         });
-    } catch(e){
-        console.log(e);
     }
+    News.countDocuments({}, (err,count) => {
+        res.send({ count });
+    });
 });
 
 //list of sources
 app.get('/sources', async (req,res) => {
-    try {
-        News.find().distinct('source.name', (err,names) => {
-            res.send({ names });
-        });
-    } catch(e){
-        console.log(e);
-    }
+    News.find().distinct('source.name', (err,names) => {
+        res.send({ names });
+    });
 });
 
 //list of unique authors
 app.get('/authors', async (req,res) => {
-    try {
-        News.find().distinct('author', (err,authors) => {
-            res.send({ authors });
-        });
-    } catch(e){
-        console.log(e);
-    }
+    News.find().distinct('author', (err,authors) => {
+        res.send({ authors });
+    });
 });
 
 app.listen(8081, () => {
